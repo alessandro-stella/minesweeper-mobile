@@ -1,9 +1,18 @@
-const difficulties = {
-  "beginner": {"bombs": 12, "verticalSize": 22, "horizontalSize": 12},
-  "easy": {"bombs": 10, "verticalSize": 7, "horizontalSize": 10},
-  "medium": {"bombs": 40, "verticalSize": 12, "horizontalSize": 22},
-  "hard": {"bombs": 100, "verticalSize": 18, "horizontalSize": 32},
-  "huge": {"bombs": 220, "verticalSize": 27, "horizontalSize": 48},
-  "extreme": {"bombs": 150, "verticalSize": 18, "horizontalSize": 32},
-  "ultra_extreme": {"bombs": 380, "verticalSize": 27, "horizontalSize": 48},
-};
+class Difficulty {
+  final String name;
+  final int bombs;
+  final int verticalSize;
+  final int horizontalSize;
+
+  Difficulty(this.name, this.bombs, this.verticalSize, this.horizontalSize);
+}
+
+List<Difficulty> difficulties = [
+  Difficulty("Beginner", 12, 22, 12),
+  Difficulty("Easy", 10, 7, 10),
+  Difficulty("Medium", 40, 12, 22),
+  Difficulty("Hard", 100, 18, 32),
+  Difficulty("Huge", 220, 27, 48),
+  Difficulty("Extreme", 150, 18, 32),
+  Difficulty("Ultra extreme", 380, 27, 48),
+];

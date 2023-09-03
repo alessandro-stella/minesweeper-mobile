@@ -10,9 +10,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String selectedDifficulty = difficulties.keys.toList()[0];
+  int selectedDifficulty = 0;
 
-  void updateDifficulty(String newDifficulty) {
+  void updateDifficulty(int newDifficulty) {
     setState(() {
       selectedDifficulty = newDifficulty;
     });
@@ -24,10 +24,10 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           DifficultySelector(
-              difficulties: difficulties.keys.toList(),
+              difficulties: difficulties.map((e) => e.name).toList(),
               updateDifficulty: updateDifficulty),
           TextButton(
-              onPressed: () => print(difficulties[selectedDifficulty]),
+              onPressed: () => print(difficulties[selectedDifficulty].name),
               child: const Text("Play"))
         ],
       ),

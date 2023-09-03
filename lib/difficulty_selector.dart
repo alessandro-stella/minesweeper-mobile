@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minesweeper/difficulties.dart';
 
 class DifficultySelector extends StatefulWidget {
   final List<String> difficulties;
@@ -13,10 +14,13 @@ class DifficultySelector extends StatefulWidget {
 
 class _DifficultySelectorState extends State<DifficultySelector> {
   int _currentIndex = 0;
+  final PageController _pageController = PageController(initialPage: 0);
 
-  void _previousString() {
+  void _previousDifficulty() {
     if (_currentIndex > 0) {
-      widget.updateDifficulty(widget.difficulties[_currentIndex - 1]);
+      widget.updateDifficulty(_currentIndex - 1);
+      _pageController.animateToPage(_currentIndex - 1,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
 
       setState(() {
         _currentIndex--;
@@ -24,9 +28,11 @@ class _DifficultySelectorState extends State<DifficultySelector> {
     }
   }
 
-  void _nextString() {
+  void _nextDifficulty() {
     if (_currentIndex < widget.difficulties.length - 1) {
-      widget.updateDifficulty(widget.difficulties[_currentIndex + 1]);
+      widget.updateDifficulty(_currentIndex + 1);
+      _pageController.animateToPage(_currentIndex + 1,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
 
       setState(() {
         _currentIndex++;
@@ -36,24 +42,46 @@ class _DifficultySelectorState extends State<DifficultySelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        if (_currentIndex != 0)
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: _previousString,
-          ),
-        Text(
-          widget.difficulties[_currentIndex],
-          style: const TextStyle(fontSize: 20),
+    return Container(
+      color: Colors.red,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: _currentIndex != 0 ? 1 : 0,
+              child: IconButton(
+                icon: const Icon(Icons.navigate_before),
+                onPressed: _previousDifficulty,
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 24,
+                child: PageView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  itemBuilder: (context, index) => Container(
+                    color: Colors.green,
+                    child: Center(child: Text(difficulties[index].name)),
+                  ),
+                ),
+              ),
+            ),
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: _currentIndex != widget.difficulties.length - 1 ? 1 : 0,
+              child: IconButton(
+                icon: const Icon(Icons.navigate_next),
+                onPressed: _nextDifficulty,
+              ),
+            ),
+          ],
         ),
-        if (_currentIndex != widget.difficulties.length - 1)
-          IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            onPressed: _nextString,
-          ),
-      ],
+      ),
     );
   }
 }
