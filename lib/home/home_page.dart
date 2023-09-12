@@ -31,26 +31,41 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          PaletteSelector(updatePalette: updatePalette),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              color: currentPalette.backgroundColor,
-              child: SvgPicture.asset("assets/mine.svg",
-                  semanticsLabel: 'Mine', color: currentPalette.mainColor),
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        color: currentPalette.backgroundColor,
+        child: Stack(children: [
+          Positioned(
+            top: 10,
+            right: 10,
+            child: PaletteSelector(
+              currentPalette: currentPalette,
+              updatePalette: updatePalette,
             ),
           ),
-          DifficultySelector(
-              difficulties: difficulties.map((e) => e.name).toList(),
-              updateDifficulty: updateDifficulty),
-          TextButton(
-              onPressed: () => print(difficulties[selectedDifficulty].name),
-              child: const Text("Play")),
-        ],
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FractionallySizedBox(
+                widthFactor: 0.5,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  color: currentPalette.backgroundColor,
+                  child: SvgPicture.asset("assets/mine.svg",
+                      semanticsLabel: 'Mine', color: currentPalette.mainColor),
+                ),
+              ),
+              DifficultySelector(
+                  currentPalette: currentPalette,
+                  difficulties: difficulties.map((e) => e.name).toList(),
+                  updateDifficulty: updateDifficulty),
+              TextButton(
+                  onPressed: () => print(difficulties[selectedDifficulty].name),
+                  child: const Text("Play")),
+            ],
+          ),
+        ]),
       ),
     );
   }

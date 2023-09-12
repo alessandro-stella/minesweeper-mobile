@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:invert_colors/invert_colors.dart';
 import 'package:minesweeper/home/difficulties.dart';
+import 'package:minesweeper/palette.dart';
 
 class DifficultySelector extends StatefulWidget {
   final List<String> difficulties;
   final Function updateDifficulty;
+  final PaletteColor currentPalette;
 
   const DifficultySelector(
-      {super.key, required this.difficulties, required this.updateDifficulty});
+      {super.key,
+      required this.difficulties,
+      required this.updateDifficulty,
+      required this.currentPalette});
 
   @override
   State<DifficultySelector> createState() => _DifficultySelectorState();
@@ -42,10 +48,9 @@ class _DifficultySelectorState extends State<DifficultySelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      child: InvertColors(
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -56,6 +61,7 @@ class _DifficultySelectorState extends State<DifficultySelector> {
               child: IconButton(
                 icon: const Icon(Icons.navigate_before),
                 onPressed: _previousDifficulty,
+                color: widget.currentPalette.backgroundColor,
               ),
             ),
             Expanded(
@@ -64,9 +70,13 @@ class _DifficultySelectorState extends State<DifficultySelector> {
                 child: PageView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _pageController,
-                  itemBuilder: (context, index) => Container(
-                    color: Colors.green,
-                    child: Center(child: Text(difficulties[index].name)),
+                  itemBuilder: (context, index) => Center(
+                    child: Text(
+                      difficulties[index].name,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: widget.currentPalette.backgroundColor),
+                    ),
                   ),
                 ),
               ),
@@ -75,9 +85,9 @@ class _DifficultySelectorState extends State<DifficultySelector> {
               duration: const Duration(milliseconds: 200),
               opacity: _currentIndex != widget.difficulties.length - 1 ? 1 : 0,
               child: IconButton(
-                icon: const Icon(Icons.navigate_next),
-                onPressed: _nextDifficulty,
-              ),
+                  icon: const Icon(Icons.navigate_next),
+                  onPressed: _nextDifficulty,
+                  color: widget.currentPalette.backgroundColor),
             ),
           ],
         ),
