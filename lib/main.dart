@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper/home_page.dart';
+import 'package:minesweeper/home/home_page.dart';
 
 void main() {
   runApp(const MainApp());

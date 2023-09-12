@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper/difficulties.dart';
+import 'package:minesweeper/home/difficulties.dart';
 
 class DifficultySelector extends StatefulWidget {
   final List<String> difficulties;
