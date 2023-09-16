@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invert_colors/invert_colors.dart';
 import 'package:minesweeper/palette.dart';
 
 class PaletteSelector extends StatefulWidget {
@@ -74,7 +73,7 @@ class _PaletteSelectorState extends State<PaletteSelector> {
                 decoration: BoxDecoration(
                     border: Border.all(
                         width: 1, color: widget.currentPalette.mainColor),
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                    borderRadius: BorderRadius.circular(20)),
               ),
             )),
         Positioned(
@@ -85,9 +84,7 @@ class _PaletteSelectorState extends State<PaletteSelector> {
               color: isExpanded
                   ? widget.currentPalette.mainColor
                   : widget.currentPalette.backgroundColor,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
-              ),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: GestureDetector(
               onTap: toggleExpansion,
@@ -104,17 +101,15 @@ class _PaletteSelectorState extends State<PaletteSelector> {
                           color: widget.currentPalette.backgroundColor,
                         ),
                       ),
-                      InvertColors(
-                        child: AnimatedOpacity(
-                          duration: const Duration(milliseconds: 300),
-                          opacity: isExpanded ? 0 : 1,
-                          child: Icon(
-                            Icons.palette,
-                            size: 30,
-                            color: widget.currentPalette.backgroundColor,
-                          ),
+                      AnimatedOpacity(
+                        duration: const Duration(milliseconds: 300),
+                        opacity: isExpanded ? 0 : 1,
+                        child: Icon(
+                          Icons.palette,
+                          size: 30,
+                          color: widget.currentPalette.invertedColor,
                         ),
-                      )
+                      ),
                     ],
                   )),
             ),

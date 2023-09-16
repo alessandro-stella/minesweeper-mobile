@@ -61,8 +61,9 @@ class _HomePageState extends State<HomePage> {
                   difficulties: difficulties.map((e) => e.name).toList(),
                   updateDifficulty: updateDifficulty),
               TextButton(
-                  onPressed: () => print(difficulties[selectedDifficulty].name),
-                  child: const Text("Play")),
+                onPressed: () => print(difficulties[selectedDifficulty].name),
+                child: const Text("Play"),
+              ),
             ],
           ),
         ]),

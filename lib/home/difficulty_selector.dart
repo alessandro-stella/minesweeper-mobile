@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invert_colors/invert_colors.dart';
+import 'package:minesweeper/custom_icon.dart';
 import 'package:minesweeper/home/difficulties.dart';
 import 'package:minesweeper/palette.dart';
 
@@ -50,47 +51,47 @@ class _DifficultySelectorState extends State<DifficultySelector> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50.0),
-      child: InvertColors(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 200),
-              opacity: _currentIndex != 0 ? 1 : 0,
-              child: IconButton(
-                icon: const Icon(Icons.navigate_before),
-                onPressed: _previousDifficulty,
-                color: widget.currentPalette.backgroundColor,
-              ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: _currentIndex != 0 ? 1 : 0,
+            child: CustomIcon(
+              currentPalette: widget.currentPalette,
+              onPressed: _previousDifficulty,
+              icon: Icons.navigate_before,
             ),
-            Expanded(
-              child: SizedBox(
-                height: 24,
-                child: PageView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _pageController,
-                  itemBuilder: (context, index) => Center(
-                    child: Text(
-                      difficulties[index].name,
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: widget.currentPalette.backgroundColor),
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 24,
+              child: PageView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                itemBuilder: (context, index) => Center(
+                  child: Text(
+                    difficulties[index].name,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: widget.currentPalette.invertedColor,
                     ),
                   ),
                 ),
               ),
             ),
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 200),
-              opacity: _currentIndex != widget.difficulties.length - 1 ? 1 : 0,
-              child: IconButton(
-                  icon: const Icon(Icons.navigate_next),
-                  onPressed: _nextDifficulty,
-                  color: widget.currentPalette.backgroundColor),
+          ),
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: _currentIndex != widget.difficulties.length - 1 ? 1 : 0,
+            child: CustomIcon(
+              currentPalette: widget.currentPalette,
+              onPressed: _nextDifficulty,
+              icon: Icons.navigate_next,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
