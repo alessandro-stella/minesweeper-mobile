@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:minesweeper/custom_button.dart';
 import 'package:minesweeper/home/difficulties.dart';
 import 'package:minesweeper/home/difficulty_selector.dart';
 import 'package:minesweeper/palette_selector.dart';
@@ -56,13 +57,20 @@ class _HomePageState extends State<HomePage> {
                       semanticsLabel: 'Mine', color: currentPalette.mainColor),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               DifficultySelector(
                   currentPalette: currentPalette,
                   difficulties: difficulties.map((e) => e.name).toList(),
                   updateDifficulty: updateDifficulty),
-              TextButton(
+              const SizedBox(
+                height: 20,
+              ),
+              CustomButton(
+                currentPalette: currentPalette,
                 onPressed: () => print(difficulties[selectedDifficulty].name),
-                child: const Text("Play"),
+                text: "Play",
               ),
             ],
           ),

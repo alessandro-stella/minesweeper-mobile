@@ -41,14 +41,32 @@ class _CustomButtonState extends State<CustomButton> {
     return GestureDetector(
       onTapDown: (_) => _handleTapDown(),
       onTapUp: (_) => _handleTapUp(),
-      child: AnimatedContainer(
+      onTapCancel: () => _handleTapUp(),
+      child: FractionallySizedBox(
+        widthFactor: 0.75,
+        child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
             color: buttonColor,
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(100),
+            border:
+                Border.all(width: 1, color: widget.currentPalette.mainColor),
           ),
           child: Padding(
-              padding: const EdgeInsets.all(8.0), child: Text(widget.text))),
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Center(
+              child: Text(
+                widget.text,
+                style: TextStyle(
+                    fontSize: 20,
+                    color: isPressed
+                        ? widget.currentPalette.backgroundColor
+                        : widget.currentPalette.invertedColor),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

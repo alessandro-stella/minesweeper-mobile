@@ -41,21 +41,23 @@ class _CustomIconState extends State<CustomIcon> {
     return GestureDetector(
       onTapDown: (_) => _handleTapDown(),
       onTapUp: (_) => _handleTapUp(),
+      onTapCancel: () => _handleTapUp(),
       child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          decoration: BoxDecoration(
-            color: buttonColor,
-            shape: BoxShape.circle,
+        duration: const Duration(milliseconds: 200),
+        decoration: BoxDecoration(
+          color: buttonColor,
+          shape: BoxShape.circle,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(
+            widget.icon,
+            color: isPressed
+                ? widget.currentPalette.backgroundColor
+                : widget.currentPalette.invertedColor,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              widget.icon,
-              color: isPressed
-                  ? widget.currentPalette.backgroundColor
-                  : widget.currentPalette.invertedColor,
-            ),
-          )),
+        ),
+      ),
     );
   }
 }
